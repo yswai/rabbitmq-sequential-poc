@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: usage_message
+
+  rabbitmq:
+    cache:
+      channel:
+        size: 1
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    url: jdbc:postgresql://localhost:5439/postgres?currentSchema=ysw
+#    username: dbuser
+#    password: dbpassword
+
+
+logging:
+  level:
+    org: ERROR
+
+tutorial:
+  client:
+    duration: 10000
