@@ -1,3 +1,8 @@
+# Abstraction
+
+Queue per product, Manual consumer ack, Connection Channel size = 1
+TODO: test with higher load, dynamic queue definition and listener registration
+
 # RabbitMQ Tutorial Using Spring AMQP
 
 This project implements each of the [6 RabbitMQ Tutorials][1] using Spring AMQP.
