@@ -1,7 +1,10 @@
 # Abstraction
 
-Queue per product, Manual consumer ack, Connection Channel size = 1
-TODO: test with higher load, dynamic queue definition and listener registration
+- Run with profiles
+  ```--spring.profiles.active=hello-world,tut1```
+- Tested with rabbitmq version 3.9.7 (single instance)
+- Queue per product, Manual consumer ack, Connection Channel size = 1
+- TODO: test with higher load & multiple replicas, dynamic queue definition and listener registration
 
 # RabbitMQ Tutorial Using Spring AMQP
 
