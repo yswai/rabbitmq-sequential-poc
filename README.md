@@ -8,6 +8,14 @@ Following approaches were considered:
   Then a backend processing-loop 
   (e.g.,: scheduled process will read the order table order by timestamp and process the orders 
   (thus calculating quantity) sequentially, and update order status accordingly)
+- Use JPQL or HQL or NativeQuery to execute the update, since single UPATE query is atomic.
+```
+  UPDATE product as p
+  SET qty = qty + :qtyOrdered
+  FROM order as o
+  ON o.product_id = p.id
+  WHERE o.id = :orderId
+```
 - Optimistic lock ```@Version``` added to product entity, and retry on ```ObjectOptimisticLockingFailureException``` 
 - Pessimistic lock:
 ```      EntityManager em = emf.createEntityManager();
