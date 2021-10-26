@@ -8,7 +8,7 @@ spring:
         size: 1
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
 
   datasource:
     url: jdbc:postgresql://localhost:5439/postgres?currentSchema=ysw

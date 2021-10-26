@@ -23,11 +23,17 @@ import org.springframework.amqp.tutorials.Order;
 import org.springframework.amqp.tutorials.OrderRepository;
 import org.springframework.amqp.tutorials.Product;
 import org.springframework.amqp.tutorials.ProductRepository;
+import org.springframework.amqp.tutorials.redis.Student;
+import org.springframework.amqp.tutorials.redis.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author Gary Russell
@@ -36,6 +42,12 @@ import java.io.IOException;
  */
 @RabbitListener(queues = "productA", ackMode = "MANUAL")
 public class ProductAReceiver {
+
+	@Autowired
+	private RedisTemplate redisTemplate;
+
+	@Autowired
+	private StudentRepository studentRepository;
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -70,7 +82,14 @@ public class ProductAReceiver {
 			productRepository.save(product);
 			return order;
 		});
+		CompletableFuture.runAsync(() -> this.testRedis(Long.valueOf(tag).toString()));
 		channel.basicAck(tag, false);
+	}
+
+	void testRedis(String tag) {
+		Student student = new Student("Eng2015001", "John Doe", Student.Gender.MALE, 1);
+		studentRepository.save(student);
+		redisTemplate.opsForList().rightPushAll("yswlist", "a", "b");
 	}
 
 }
